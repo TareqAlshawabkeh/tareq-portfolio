@@ -72,53 +72,86 @@ export default function Home() {
       />
 
       {/* HERO SECTION */}
-      <section className="flex flex-col items-start mb-32 pt-10">
-        <p className="text-blue-500 font-medium mb-4 text-lg tracking-wide">
-          Hi, my
-          name is
-        </p>
+      <section className="relative flex flex-col items-start mb-12 pt-2 pb-4 overflow-visible">
+        {/* 1. الخلفية التقنية (الشبكة والشعاع الخلفي) */}
+        <div className="absolute inset-0 -z-10 pointer-events-none">
+          {/* الشبكة الهادئة */}
+          <div className="absolute inset-0 bg-[linear-gradient(to_right,#1e293b_1px,transparent_1px),linear-gradient(to_bottom,#1e293b_1px,transparent_1px)] bg-[size:35px_35px] opacity-15"></div>
+          {/* شعاع الضوء الكبير في الخلفية */}
+          <div className="absolute left-1/2 top-0 -translate-x-1/2 w-[600px] h-[400px] bg-blue-500/5 blur-[120px] rounded-full"></div>
+        </div>
 
-        <h1 className="text-5xl md:text-7xl font-extrabold text-slate-100 mb-6 tracking-tight">
-          {
-            portfolioData
-              .personal
-              .name
-          }
-          .
-        </h1>
+        {/* 2. حاوية الصورة (بالمنتصف مع الشعاع المتفاعل) */}
+        <div className="w-full flex justify-center mb-2 relative">
+          <div className="relative w-24 h-24 md:w-28 md:h-29 group">
+            {/* الشعاع (الهالة) - موجود دائماً ويزيد عند التأشير بالماوس */}
+            <div className="absolute inset-0 bg-blue-500 rounded-full blur-lg opacity-30 group-hover:opacity-60 transition-opacity duration-500"></div>
+            {/* نبض خفيف جداً خلف الصورة ليعطي حياة للموقع */}
+            <div className="absolute inset-0 bg-blue-500 rounded-full animate-pulse opacity-10"></div>
 
-        <h2 className="text-3xl md:text-5xl font-bold text-slate-400 mb-8 leading-tight">
-          {
-            portfolioData
-              .personal
-              .title
-          }
-          .
-        </h2>
+            <img
+              src="/profile.jpg"
+              alt="Eng. Tareq"
+              className="relative w-full h-full rounded-full object-cover border-2 border-blue-500/30 shadow-2xl z-10 transition-transform duration-300 group-hover:scale-105"
+            />
 
-        <p className="text-lg text-slate-400 max-w-2xl mb-10 leading-relaxed">
-          {
-            portfolioData
-              .personal
-              .bio
-          }
-        </p>
+            {/* تأثير دوائر الـ CPU حول الصورة */}
+            <div className="absolute -inset-2 border border-blue-500/20 rounded-full animate-[spin_20s_linear_infinite]"></div>
+            <div className="absolute -inset-4 border border-slate-800/50 rounded-full"></div>
+          </div>
+        </div>
 
-        <div className="flex gap-4">
-          <a
-            href="#projects"
-            className="px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg transition-colors"
-          >
-            View
-            Projects
-          </a>
-          <a
-            href={`mailto:${portfolioData.personal.email}`}
-            className="px-6 py-3 bg-slate-800 border border-slate-700 hover:border-slate-500 text-white font-medium rounded-lg transition-colors"
-          >
-            Contact
-            Me
-          </a>
+        {/* 3. النصوص والأزرار (موازاة لليسار وبأحجام متناسقة) */}
+        <div className="z-20 w-full">
+          <p className="text-blue-500 font-mono mb-2 text-sm md:text-base tracking-widest uppercase opacity-80">
+            Hi, my
+            name is
+          </p>
+
+          <h1 className="text-4xl md:text-6xl font-extrabold text-slate-100 mb-3 tracking-tight">
+            {
+              portfolioData
+                .personal
+                .name
+            }
+            <span className="text-blue-500">
+              .
+            </span>{" "}
+            {/* النقطة الزرقاء اللي طلبتها */}
+          </h1>
+
+          <h2 className="text-2xl md:text-4xl font-bold text-slate-400 mb-6 leading-tight">
+            {
+              portfolioData
+                .personal
+                .title
+            }
+          </h2>
+
+          <p className="text-base md:text-lg text-slate-300 max-w-2xl mb-8 leading-relaxed border-l-2 border-blue-600/20 pl-6 py-1">
+            {
+              portfolioData
+                .personal
+                .bio
+            }
+          </p>
+
+          <div className="flex gap-4">
+            <a
+              href="#projects"
+              className="px-5 py-2.5 bg-blue-600 hover:bg-blue-700 hover:shadow-[0_0_20px_rgba(37,99,235,0.4)] text-white font-semibold rounded-lg transition-all text-sm md:text-base"
+            >
+              View
+              Projects
+            </a>
+            <a
+              href={`mailto:${portfolioData.personal.email}`}
+              className="px-5 py-2.5 bg-slate-800 border border-slate-700 hover:border-blue-500/50 text-white font-semibold rounded-lg transition-all text-sm md:text-base"
+            >
+              Contact
+              Me
+            </a>
+          </div>
         </div>
       </section>
 
