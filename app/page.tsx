@@ -18,11 +18,14 @@ export default function Home() {
     title: string;
     images?: string[];
     video?: string;
+    presentation?: string[]; // 👈 السطر الجديد
   }>({
     isOpen: false,
     title: "",
     images: [],
     video: "",
+    presentation:
+      [], // 👈 السطر الجديد
   });
 
   const openModal =
@@ -30,6 +33,7 @@ export default function Home() {
       title: string,
       images?: string[],
       video?: string,
+      presentation?: string[], // 👈 السطر الجديد
     ) => {
       setModalContent(
         {
@@ -37,6 +41,7 @@ export default function Home() {
           title,
           images,
           video,
+          presentation, // 👈 السطر الجديد
         },
       );
     };
@@ -69,6 +74,9 @@ export default function Home() {
         video={
           modalContent.video
         }
+        presentation={
+          modalContent.presentation
+        } // 👈 السطر السحري الجديد
       />
 
       {/* HERO SECTION */}
@@ -314,6 +322,9 @@ export default function Home() {
                 gallery={
                   project.gallery
                 }
+                presentation={
+                  project.presentation
+                } // 👈 التمرير الجديد
                 onOpenMedia={
                   openModal
                 }

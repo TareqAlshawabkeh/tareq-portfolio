@@ -16,10 +16,12 @@ interface ProjectProps {
   icon: any;
   video?: string;
   gallery?: string[];
+  presentation?: string[]; // أضفنا هاي عشان صور البرزنتيشن
   onOpenMedia?: (
     title: string,
     images?: string[],
     video?: string,
+    presentation?: string[], // أضفناها هون كمان
   ) => void;
 }
 
@@ -34,14 +36,18 @@ export default function ProjectCard({
   icon: Icon,
   video,
   gallery,
+  presentation,
   onOpenMedia,
 }: ProjectProps) {
-  // Check if there is media to show the button
+  // Check if there is any media to show the button
   const hasMedia =
     (gallery &&
       gallery.length >
         0) ||
-    video;
+    video ||
+    (presentation &&
+      presentation.length >
+        0);
 
   return (
     <div className="bg-slate-800 p-6 rounded-xl border border-slate-700 hover:border-blue-500 transition-colors flex flex-col h-full">
@@ -120,7 +126,7 @@ export default function ProjectCard({
           </a>
         )}
 
-        {/* Updated Button: Now Amber/Gold instead of Blue */}
+        {/* زر فتح النافذة */}
         {hasMedia &&
           onOpenMedia && (
             <button
@@ -129,14 +135,15 @@ export default function ProjectCard({
                   title,
                   gallery,
                   video,
+                  presentation,
                 )
               }
               className="flex items-center text-sm text-amber-500 hover:text-amber-400 font-bold transition-colors ml-auto cursor-pointer"
             >
               <PlayCircle className="w-4 h-4 mr-2" />{" "}
               View
-              Demo &
-              Gallery
+              Case
+              Study
             </button>
           )}
       </div>

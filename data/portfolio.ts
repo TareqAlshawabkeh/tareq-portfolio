@@ -24,6 +24,7 @@ export interface Project {
   icon: any;
   video?: string;
   gallery?: string[];
+  presentation?: string[];
 }
 export interface Achievement {
   id: number;
@@ -253,8 +254,6 @@ export const portfolioData =
         live: "",
         icon: Activity,
         // أضفنا هذه البيانات الجديدة هنا 👇
-        video:
-          "/demo-video.mp4", // مسار الفيديو في مجلد public
         gallery: [
           "/trading-project/1.jpeg",
           "/trading-project/2.jpeg",
@@ -272,7 +271,21 @@ export const portfolioData =
           "/trading-project/14.jpeg", // أضف أسماء صورك هنا
           "/trading-project/15.jpeg", // أضف أسماء صورك هنا
         ],
+        presentation:
+          [
+            "/trading-project/result-0.jpg",
+            "/trading-project/result-1.jpg",
+            "/trading-project/result-2.jpg",
+            "/trading-project/result-3.jpg",
+            "/trading-project/result-4.jpg",
+            "/trading-project/result-5.jpg",
+            "/trading-project/result-6.jpg",
+            "/trading-project/result-7.jpg",
+          ],
+        video:
+          "/demo-video.mp4", // مسار الفيديو في مجلد public
       },
+
       {
         id: 2,
         title:

@@ -8,6 +8,9 @@ import {
   PlayCircle,
   ChevronLeft,
   ChevronRight,
+  LayoutTemplate,
+  Play,
+  BarChart3,
 } from "lucide-react";
 import {
   useState,
@@ -20,6 +23,7 @@ interface MediaModalProps {
   title: string;
   images?: string[];
   video?: string;
+  presentation?: string[]; // أضفنا البرزنتيشن هون
 }
 
 export default function MediaModal({
@@ -28,20 +32,59 @@ export default function MediaModal({
   title,
   images,
   video,
+  presentation,
 }: MediaModalProps) {
-  // State for the image slider
+  // حالة التبويبات (Tabs)
+  const [
+    activeTab,
+    setActiveTab,
+  ] = useState<
+    | "app"
+    | "demo"
+    | "results"
+  >("app");
+  // حالة الـ Slider تبعك
   const [
     currentIndex,
     setCurrentIndex,
   ] = useState(0);
 
-  // Reset index when modal opens
+  // Reset index & tab when modal opens
   useEffect(() => {
-    if (isOpen)
+    if (isOpen) {
       setCurrentIndex(
         0,
       );
-  }, [isOpen]);
+      // اختيار التبويب الافتراضي الذكي
+      if (
+        images &&
+        images.length >
+          0
+      )
+        setActiveTab(
+          "app",
+        );
+      else if (
+        video
+      )
+        setActiveTab(
+          "demo",
+        );
+      else if (
+        presentation &&
+        presentation.length >
+          0
+      )
+        setActiveTab(
+          "results",
+        );
+    }
+  }, [
+    isOpen,
+    images,
+    video,
+    presentation,
+  ]);
 
   if (!isOpen)
     return null;
@@ -129,44 +172,81 @@ export default function MediaModal({
             </button>
           </div>
 
-          {/* Body */}
-          <div className="flex-grow overflow-y-auto p-6 flex flex-col gap-8 items-center">
-            {/* Video Section */}
-            {video && (
-              <div className="w-full max-w-4xl">
-                <h4 className="text-amber-500 font-bold mb-4 flex items-center gap-2">
-                  <PlayCircle className="w-5 h-5" />{" "}
-                  Project
-                  Showcase
-                  Video
-                </h4>
-                <video
-                  controls
-                  className="w-full rounded-xl border border-slate-700 shadow-lg bg-black"
-                >
-                  <source
-                    src={
-                      video
-                    }
-                    type="video/mp4"
-                  />
-                </video>
-              </div>
-            )}
-
-            {/* Image Slider Section */}
+          {/* التبويبات (Tabs) */}
+          <div className="flex border-b border-slate-800 bg-slate-900">
             {images &&
               images.length >
                 0 && (
-                <div className="w-full max-w-4xl flex flex-col items-center">
-                  <h4 className="text-amber-500 font-bold mb-4 w-full text-left">
-                    Gallery
-                    &
-                    Presentation
-                  </h4>
+                <button
+                  onClick={() =>
+                    setActiveTab(
+                      "app",
+                    )
+                  }
+                  className={`flex-1 flex items-center justify-center py-3 text-sm font-semibold transition-colors border-b-2 ${
+                    activeTab ===
+                    "app"
+                      ? "border-blue-500 text-blue-500 bg-blue-500/5"
+                      : "border-transparent text-slate-400 hover:text-slate-200 hover:bg-slate-800/50"
+                  }`}
+                >
+                  <LayoutTemplate className="w-4 h-4 mr-2" />{" "}
+                  App
+                  Interface
+                </button>
+              )}
+            {video && (
+              <button
+                onClick={() =>
+                  setActiveTab(
+                    "demo",
+                  )
+                }
+                className={`flex-1 flex items-center justify-center py-3 text-sm font-semibold transition-colors border-b-2 ${
+                  activeTab ===
+                  "demo"
+                    ? "border-amber-500 text-amber-500 bg-amber-500/5"
+                    : "border-transparent text-slate-400 hover:text-slate-200 hover:bg-slate-800/50"
+                }`}
+              >
+                <Play className="w-4 h-4 mr-2" />{" "}
+                Live
+                Demo
+              </button>
+            )}
+            {presentation &&
+              presentation.length >
+                0 && (
+                <button
+                  onClick={() =>
+                    setActiveTab(
+                      "results",
+                    )
+                  }
+                  className={`flex-1 flex items-center justify-center py-3 text-sm font-semibold transition-colors border-b-2 ${
+                    activeTab ===
+                    "results"
+                      ? "border-emerald-500 text-emerald-500 bg-emerald-500/5"
+                      : "border-transparent text-slate-400 hover:text-slate-200 hover:bg-slate-800/50"
+                  }`}
+                >
+                  <BarChart3 className="w-4 h-4 mr-2" />{" "}
+                  System
+                  Results
+                </button>
+              )}
+          </div>
 
-                  <div className="relative w-full aspect-video bg-black/50 rounded-xl border border-slate-800 flex items-center justify-center overflow-hidden group">
-                    {/* Current Image */}
+          {/* Body */}
+          <div className="flex-grow overflow-y-auto p-6 flex flex-col gap-8 items-center custom-scrollbar">
+            {/* 1. App Interface (Slider تبعك) */}
+            {activeTab ===
+              "app" &&
+              images &&
+              images.length >
+                0 && (
+                <div className="w-full max-w-4xl flex flex-col items-center">
+                  <div className="relative w-full aspect-video bg-black/50 rounded-xl border border-slate-800 flex items-center justify-center overflow-hidden group shadow-lg">
                     <img
                       src={
                         images[
@@ -176,8 +256,6 @@ export default function MediaModal({
                       alt={`Slide ${currentIndex + 1}`}
                       className="max-w-full max-h-full object-contain"
                     />
-
-                    {/* Slider Controls (Only show if more than 1 image) */}
                     {images.length >
                       1 && (
                       <>
@@ -185,7 +263,7 @@ export default function MediaModal({
                           onClick={
                             prevImage
                           }
-                          className="absolute left-4 p-2 bg-slate-900/80 hover:bg-amber-500 text-white rounded-full transition-colors opacity-0 group-hover:opacity-100"
+                          className="absolute left-4 p-2 bg-slate-900/80 hover:bg-blue-500 text-white rounded-full transition-colors opacity-0 group-hover:opacity-100"
                         >
                           <ChevronLeft className="w-6 h-6" />
                         </button>
@@ -193,12 +271,10 @@ export default function MediaModal({
                           onClick={
                             nextImage
                           }
-                          className="absolute right-4 p-2 bg-slate-900/80 hover:bg-amber-500 text-white rounded-full transition-colors opacity-0 group-hover:opacity-100"
+                          className="absolute right-4 p-2 bg-slate-900/80 hover:bg-blue-500 text-white rounded-full transition-colors opacity-0 group-hover:opacity-100"
                         >
                           <ChevronRight className="w-6 h-6" />
                         </button>
-
-                        {/* Image Counter */}
                         <div className="absolute bottom-4 px-3 py-1 bg-slate-900/80 text-slate-300 text-xs rounded-full">
                           {currentIndex +
                             1}{" "}
@@ -210,6 +286,65 @@ export default function MediaModal({
                       </>
                     )}
                   </div>
+                </div>
+              )}
+
+            {/* 2. Video Section (حجم مرتب) */}
+            {activeTab ===
+              "demo" &&
+              video && (
+                <div className="w-full max-w-4xl flex justify-center items-center bg-black/40 rounded-xl border border-slate-800 p-2 shadow-lg">
+                  <video
+                    controls
+                    autoPlay
+                    className="rounded-lg w-full max-h-[60vh] object-contain"
+                  >
+                    <source
+                      src={
+                        video
+                      }
+                      type="video/mp4"
+                    />
+                    Your
+                    browser
+                    does
+                    not
+                    support
+                    the
+                    video
+                    tag.
+                  </video>
+                </div>
+              )}
+
+            {/* 3. System Results Section (صور البرزنتيشن الـ 7) */}
+            {activeTab ===
+              "results" &&
+              presentation &&
+              presentation.length >
+                0 && (
+                <div className="w-full max-w-4xl flex flex-col gap-6">
+                  {presentation.map(
+                    (
+                      img,
+                      index,
+                    ) => (
+                      <div
+                        key={
+                          index
+                        }
+                        className="w-full bg-slate-900 border border-slate-700 rounded-xl overflow-hidden shadow-lg"
+                      >
+                        <img
+                          src={
+                            img
+                          }
+                          alt={`Presentation slide ${index + 1}`}
+                          className="w-full h-auto"
+                        />
+                      </div>
+                    ),
+                  )}
                 </div>
               )}
           </div>
