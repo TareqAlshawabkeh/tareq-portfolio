@@ -128,7 +128,7 @@ export default function Home() {
             }
           </h2>
 
-          <p className="text-base md:text-lg text-slate-300 max-w-2xl mb-8 leading-relaxed border-l-2 border-blue-600/20 pl-6 py-1">
+          <p className="text-base md:text-lg text-slate-300 max-w-4xl mb-8 leading-relaxed border-l-2 border-blue-600/20 pl-6 py-1">
             {
               portfolioData
                 .personal

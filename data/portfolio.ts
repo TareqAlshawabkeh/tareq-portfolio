@@ -63,8 +63,8 @@ export const portfolioData =
     personal: {
       name: "Eng. Tareq Shawabkeh",
       title:
-        "Computer Engineering Graduate & AI Developer",
-      bio: "I build intelligent systems and real-time applications, with a focus on AI-driven trading, scalable backend architectures, and computer vision. I engineer production-level solutions from data pipelines to deployment.",
+        "Computer Engineer & AI Systems Builder",
+      bio: "I build end-to-end intelligent systems by developing machine learning and computer vision models and integrating them into scalable backend architectures and real-time pipelines. From model development to deployment — I engineer complete, production-ready solutions.",
       email:
         "tareqshawabkehwork@gmail.com",
     },
