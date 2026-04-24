@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import Navbar from "../components/Navbar";
-
+import { GoogleAnalytics } from "@next/third-parties/google";
 const inter = Inter(
   {
     subsets: [
@@ -55,6 +55,8 @@ export default function RootLayout({
       >
         <Navbar />
         {children}
+        {/* كود التتبع تبع جوجل */}
+        <GoogleAnalytics gaId="G-0NDCX352PW" />
       </body>
     </html>
   );
